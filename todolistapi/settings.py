@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL="authentication.User"  # set the path to the authentication model and User class
 
 # Application definition
 
