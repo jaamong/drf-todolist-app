@@ -14,17 +14,17 @@ class MyUserManager(UserManager):
         """
         if not username:
             raise ValueError("The given username must be set")
-        
+
         if not email:
             raise ValueError("The given email must be set")
-        
+
         email = self.normalize_email(email)
         username = self.model.normalize_username(username)
         user = self.model(username=username, email=email, **extra_fields)
-        
+
         user.set_password(password)
         user.save(using=self._db)
-        
+
         return user
 
     def create_user(self, username, email, password=None, **extra_fields):
@@ -42,7 +42,6 @@ class MyUserManager(UserManager):
             raise ValueError("Superuser must have is_superuser=True.")
 
         return self._create_user(username, email, password, **extra_fields)
-        
 
 
 # add new properties access_token, is_email_verified
@@ -72,7 +71,7 @@ class User(AbstractBaseUser, PermissionsMixin, TrackingModel):
             "unique": _("A user with that username already exists."),
         },
     )
-    email = models.EmailField(_("email address"), blank=False, unique=True)  
+    email = models.EmailField(_("email address"), blank=False, unique=True)
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
