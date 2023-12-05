@@ -37,14 +37,14 @@ class TestModel(APITestCase):
         with self.assertRaisesMessage(ValueError, 'The given email must be set'):
             User.objects.create_user(username='testnotemail', email='', password='password123!@')
 
-    def creates_super_user_with_is_staff_status(self):
+    def test_cant_creates_super_user_with_is_staff_status_false(self):
         with self.assertRaisesMessage('Superuser must have is_staff=True.'):
             User.objects.create_superuser(username='username',
                                           email='username@example.com',
                                           password='password123!@',
                                           is_staff=False)
 
-    def creates_super_user_with_super_user_status(self):
+    def test_cant_creates_super_user_with_super_user_status_false(self):
         with self.assertRaisesMessage('Superuser must have is_superuser=True.'):
             User.objects.create_superuser(username='username',
                                           email='username@example.com',
