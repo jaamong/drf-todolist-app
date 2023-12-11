@@ -1,9 +1,24 @@
 from django.contrib.auth import authenticate
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
+import authentication.jwt
 from authentication.serializers import RegisterSerializer, LoginSerializer
+
+
+class AuthUserAPIView(GenericAPIView):
+    """
+    for this to work, throw an error when the user is not authenticated.
+    we need to have permission set up on this view.
+    """
+    permission_classes = (permissions.IsAuthenticated,)  # user should have a token
+    authentication_classes = (authentication.jwt.JWTAuthentication,)
+
+    def get(self, request):
+        user = request.user
+        serializer = RegisterSerializer(user)
+        return Response({'user': serializer.data})
 
 
 class RegisterAPIVIew(GenericAPIView):
