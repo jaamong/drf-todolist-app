@@ -1,0 +1,7 @@
+
+serializer에서 fields로 선언하면 request body, response body의 필드로 사용됨
+이때 request에만 사용할 거면 write_only, response에만 사용할거면 read_only_fields로 지정해야 함
+model 필드 외에 message나 다른 필드를 넣을 때는 views.py에서 Response를 리턴할 때 넣는다.
+
+Ex 1. return Response(serializer.data, status=status.HTTP_200_OK)  # serializer.data를 통해서 model 필드 전달, 그 외 status는 Response 속성
+Ex 2. `return Response({'message': 'invalid credentials. try again'}, status=status.HTTP_401_UNAUTHORIZED)`

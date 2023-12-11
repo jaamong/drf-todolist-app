@@ -1,0 +1,22 @@
+* Serializer
+- it's pretty much a class that is responsible to turn json data that the user sends to our program into python native objects.
+- because: when a user sends json, we need a way to map it to like a model object.
+- serializer going to do some validation -> ModelSerializer is going to try to match the data we are sending from the user and the rules that these or the validations that those fields have on the model.
+ - `if serializer.is_valid():`  ## if the data we sent to the serializer is valid then save the user.
+  -> when we do .save(), we need to make sure that our serializer implements the create method.
+ ** class Meta:
+   - add some extra information to our serializer
+   *** model : tell it to use the model
+   *** fields (this is important)
+    - with the fields, we can define which keys and attributes or data we want to be sending to the F/E or make visible to the F/E.
+    - password : write only -> we don't want to be sending the password back to the user on any request or any query.
+       => password = serializers.CharField(..., write_only=True)
+---
+* GenericAPIView
+ ** RegisterAPIView
+  - set up "serializer_class"
+  - after saving the user data, we need to tell a user that the account was created or logging something like that
+     -> `return rest_framework.response.Response(data, status, template_name, headers, exception, content_type)`
+       -> we only want to send the data. how do we get the data?
+         -> whenver we create an objects using `create method in Serializer`, the Serializer is going to look at the fields we have. this is what is going to return in the data. the values of what is saved for these fields.
+    ! notice ! the password is "write only". it won't be sent back. so we can expect the email and the username.

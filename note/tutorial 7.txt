@@ -1,0 +1,13 @@
+* LoginAPIVIew:
+`email = request.data.get('email', None) `
+password = request.data.get('password', None)
+ -> when a user doesn't send these keys, gate will throw a `KeyError`.
+     so first, what you want to do is do 'None' here.
+** authenticate
+ `from django.contrib.auth import authenticate`
+then in post method,
+ ` user = authenticate(authenticate target)`
+if user, then log them in and send them token. -> token : `pip install pyjwt`, `import jwt`
+ -> `pyjwt` is a module that enables us to work with authoring JWT tokens.
+      decoding and encoding them .. all those kinds of things.
+--> remeber we have a property on the user model: `@property def token`
