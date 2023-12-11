@@ -1,0 +1,20 @@
+* ForeignKey
+Django 모델링에서 ForeignKey를 설정할 때 필수로 받아야 하는 인자
+ - to: 다대일 관계에 놓을 클래스
+ - on_delete: SQL constraint 설정
+
+
+* CreateTodoAPIView(CreateAPIView)  # from rest_framework.generics import CreateAPIView
+we need to be able to tell the Django that when it is creating this todo
+it should set the owner who is currently logged in or who is making that request.
+-> override a method `perform_create(self, serializer)`
+    return serializer.save(owner=self.request.user)
+
+
+* TodoListAPIView(ListAPIView)
+what we must specify is the `queryset` -> 어떤 데이터를 사용자에게 보내줄건지 Django에게 알려줘야 함
+ - CreateAPIView는 post 메소드로 데이터를 받아서 serialize한다. ListAPIView는 사용자에게 데이터를 보내는 것이므로 그 데이터를 정의하고 serialize 한다.
+
+* queryset Vs get_queryset
+- queryset: 서버 구동 이후 첫 request 요청에 대해서 DB 조회 후 캐시로 저장 (즉, DB를 한 번만 조회)
+- get_queryset: 캐시 저장 없이 매 요청마다 DB 조회
