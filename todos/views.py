@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
 import authentication.jwt
@@ -35,3 +35,13 @@ class ListCreateTodosAPIView(ListCreateAPIView):
 #
 #     def get_queryset(self):
 #         return Todo.objects.filter(owner=self.request.user)
+
+
+class TodoDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = TodoSerializer
+    lookup_field = 'id'
+    permission_classes = [IsAuthenticated, ]
+    authentication_classes = [authentication.jwt.JWTAuthentication]
+
+    def get_queryset(self):
+        return Todo.objects.filter(owner=self.request.user)
