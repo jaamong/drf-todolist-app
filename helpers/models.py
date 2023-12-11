@@ -15,4 +15,4 @@ class TrackingModel(models.Model):
         abstract = True
 
         # set up ordering by created_at descending
-        ordering = '-created_at'
+        ordering = ('-created_at', )
