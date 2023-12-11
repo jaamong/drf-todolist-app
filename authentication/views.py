@@ -12,8 +12,8 @@ class AuthUserAPIView(GenericAPIView):
     for this to work, throw an error when the user is not authenticated.
     we need to have permission set up on this view.
     """
-    permission_classes = (permissions.IsAuthenticated,)  # user should have a token
-    authentication_classes = (authentication.jwt.JWTAuthentication,)
+    permission_classes = [permissions.IsAuthenticated,]  # user should have a token
+    authentication_classes = [authentication.jwt.JWTAuthentication,]
 
     def get(self, request):
         user = request.user
