@@ -12,7 +12,8 @@ class ListCreateTodosAPIView(ListCreateAPIView):
     serializer_class = TodoSerializer
     permission_classes = [IsAuthenticated, ]
     authentication_classes = [authentication.jwt.JWTAuthentication]
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [DjangoFilterBackend,
+                       filters.SearchFilter, filters.OrderingFilter]
 
     filterset_fields = ['id', 'title', 'desc', 'is_complete']
     search_fields = ['id', 'title', 'desc', 'is_complete']
