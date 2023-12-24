@@ -1,0 +1,58 @@
+Goal: Filtering, Searching, and Ordering
+
+1. install django filters
+
+$ pip install django_filter
+
+that's going to be able to give us the django filter backend 
+so that provides us different ways that 
+we can filter our data it gives you a lot of flexibility 
+you can define things like regular expressions.
+
+
+2. go to your `settings.py` and then add `django_filters` at INSTALLED_APPS
+
+3. then we can specify a `filter_backends`. we can set that onto a list.
+    declare `filter_backends` field in your views (from django_filters.rest_framework import DjangoFilterBackend)
+=> once we have this, we can go ahead and we specify the filter set fields.
+
+4. and then, `filterset_fields` and set another list
+=> we can filter by the id, title, 'desc', is_complete, ...
+
+5. now we can use the filters
+=> /api/todos?id=... || ?title=... || ?desc=... || ?is_complete=...
+(note: 단어 정확히 일치해야 함.)
+
+
+---
+[SearchFilter]
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+
+
+class ...APIView(...):
+    ...
+    filter_backends = [DjangoFilterBackend, filter.SearchFilter]
+
+    filterset_fields = ['id', 'title', 'desc', 'is_complete']
+    search_fields = ['id', 'title', 'desc', 'is_complete']
+
+=> filter.SearchFilter: 
+    like this so any specific search filter then you want to sepcify the search fields,
+    add `search_fields`.
+    and then we can use query "search"
+    -> Ex. /api/todos?search=blahblah
+        search_field로 설정된 곳에서 "blahblah"가 포함된 모든 결과를 얻을 수 있음
+
+---
+[OrderingFilter]
+    
+    ...
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+
+    filterset_fields = ['id', 'title', 'desc', 'is_complete']
+    search_fields = ['id', 'title', 'desc', 'is_complete']
+    Ordering_fields = ['id', 'title', 'desc', 'is_complete']
+
+=> 순서 정렬
+note: use `ordering=-id` (note the before the id) to order by descending order.
