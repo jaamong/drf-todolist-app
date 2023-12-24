@@ -1,0 +1,54 @@
+Goal: Pagination
+
+enable pagination -> settings.py -> REST_FRAMEWORK
+=> add `DEFAULT_PAGINATION_CLASS`
+
+```
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': "",
+}
+```
+=> django provides 3 classes that we can use to paginate our APIs
+    1. the limit offset pagination
+    2. the page number detonation
+    3. the cursor pagination 
+
+so enable the limit offset pagination(no. 1)
+```
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': "rest_framework.pagination.LimitOffsetPagination",
+}
+```
+after define this, specify the limit in url =like this=> `/api/todos?limit=1` 
+Response: meatadata sent back to us. 
+    - count: 얼마나 많은 아이템들이 있는지
+    - next: 다음 페이지 => "/api/todos/?limit=1&offset=1"
+    - previous: 이전 페이지
+    - result: 페이징 결과
+
+we can use "offset" =like this=> `/api/todos?limit=1&offset=10` 
+
+so you can also use page number pagination (no.2 )
+```
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': "rest_framework.pagination.PageNumberPagination",
+}
+```
+=> this allows us specify a page that we would want.
+whenever you use the PageNumberPagination, you can also specify the per page setting.
+=> you can say for every page which is `PAGE_SIZE`, then you can specify the number of items you want.
+```
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10, 
+}
+```
+after define this, specify the limit in url =like this=> `/api/todos/` 
+Response: we get the same response as in no. 1
+        but "next" and "previous" field is different. 
+        those field have "page" query. => "/api/todos/?page=2"
+
+and you want to specify "count" field. 
+=> we need to create a custom pagination class.
+after creating, we can import that class. In APIView, define `pagination_class`.
+=> final url: "/api/todos?p=1&count=1"
