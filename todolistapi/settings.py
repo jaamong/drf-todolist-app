@@ -26,7 +26,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = "authentication.User"  # set the path to the authentication model and User class
+# set the path to the authentication model and User class
+AUTH_USER_MODEL = "authentication.User"
 
 # Application definition
 
@@ -101,6 +102,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 1,
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
