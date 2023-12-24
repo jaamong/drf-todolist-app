@@ -6,12 +6,14 @@ from rest_framework.permissions import IsAuthenticated
 import authentication.jwt
 from .models import Todo
 from .serializers import TodoSerializer
+from .pagination import CustomPageNumberPagination
 
 
 class ListCreateTodosAPIView(ListCreateAPIView):
     serializer_class = TodoSerializer
     permission_classes = [IsAuthenticated, ]
     authentication_classes = [authentication.jwt.JWTAuthentication]
+    pagination_class = CustomPageNumberPagination
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
 
