@@ -1,0 +1,41 @@
+django test command: python manage.py test
+
+* django test help tool : pip install coverage
+ -> can use coverate to run the test
+ -> can see the test report 
+ - do :  coverage run manage.py test && coverage report && coverate html
+   - meaning: run coverage about test and coverage report after test. also generate an html folder that contain a website which you can navigate and see the tests.
+
+* .coveragerc
+source: coverage target (written code)
+omit: omits some files from being discovered by coverage when it's collecting coverage
+
+* htmlcov/index.html
+1. open this file in browser
+2. click on the modules of py file
+3. you can see the red
+  -> it means that those files we need to test them
+
+* remove the already existed tests.py and then create "tests/__init__.py"
+by the way the data init if you're not familiar it pretty much tells python to look at this directory as a module and we can basically import from it.
+
+* writing test code
+when you're writing tests you want to make sure, you start each test function with "test_".
+
+* APITestCase
+every time we improt from APITestCase, we get access to all the "assertion" methods
+
+* after run coverage test, open index file. 
+and then make sure the red has disappeared
+
+* test method name is descriptive.
+
+* want to test for the error message
+going to need to write your code in a context menager.
+so the way those work is you can write your expression and then you run the function 
+that you should raise that exception.
+so we can do "with" then we want to do "self.assertRaiseMessage" and do full colon at the end -> Ex. `with self.assertRaiseMessage(...):`
+then inside you can run the expression,
+
+
+

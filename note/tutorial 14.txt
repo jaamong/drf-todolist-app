@@ -1,0 +1,31 @@
+Goal: API를 테스트 해보자!
+
+```Python
+from rest_framework.rest import APITestCase
+```
+
+위 라이브러리를 임포트한다. 
+APITestCase를 상속받으면 client에게 접근할 수 있다. 
+
+todo를 생성하는 테스트를 할 때 결과로 성공(200)이나 실패가 반환될 것으로 예상할 수 있다.
+하지만, 그 전에 정말 생각해야 하는 부분이 있는데 바로 인증/인가 부분이다.
+이 부분으로 인해 처음에는 401 에러(unauthorized)를 받을 것이다.
+
+만일 로그인은 성공했으나 권한이 없는 경우에는 403 에러(forbidden)를 받게 된다.
+
+login의 경우, (self는 APITestCase를 상속받은 상태)
+`.credentials`
+The credentials method can be used to set headers that will then be included on all subsequent requests by the test client.
+```Python
+self.client.credentials(HTTP_AUTHORIZATION=token)
+```
+
+Note that calling credentials a second time overwrites any existing credentials. You can unset any existing credentials by calling the method with no arguments.
+```Python
+# Stop including any credentials
+client.credentials()
+```
+The credentials method is appropriate for testing APIs that require authentication headers, such as basic authentication, OAuth1a and OAuth2 authentication, and simple token authentication schemes.
+
+
+
