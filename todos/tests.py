@@ -5,7 +5,7 @@ from rest_framework import status
 from .models import Todo
 
 
-class TestListCreateTodos(APITestCase):
+class TestListCreateTodosAPIView(APITestCase):
 
     def authenticate(self):
         user = {'username': 'username', 
